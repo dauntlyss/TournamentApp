@@ -1,18 +1,26 @@
 <h1>Round: 1</h1>
-<p>{{ players }}</p>
+
 <h4>Match 1</h4>
-<form (ngSubmit)="completeRound()">
-		<input type="radio"
-       	   name="matchOne"
-           value="matchOne[0]"
-		       (click)="setMatchOneWinner(matchOne[0])">
-		<label for="matchOne[0]">{{ matchOne[0] }}</label>
-		<input type="radio"
-       	   name="matchOne"
-           value="matchOne[1]"
-		       (click)="setMatchOneWinner(matchOne[1])">
-		<label for="matchOne[1]">{{ matchOne[1] }}</label>
-		<br>
+
+<div class="form-group">
+	<form (ngSubmit)="completeRound()">
+		<div *ngFor="let match of matches; index as contestantSpot">
+			<h4>Match {{ contestantSpot + 1 }}</h4>
+
+			<input type="radio"
+			       name="match{{ contestantSpot }}"
+			       value="matches[contestantSpot].firstContestant">
+
+			<label>{{ matches[contestantSpot].firstContestant  }}</label>
+
+      <input type="radio"
+			       name="match{{ contestantSpot }}"
+			       value="matches[contestantSpot].secondContestant">
+
+			<label>{{ matches[contestantSpot].secondContestant }}</label>
+      
+			<br>
+		</div>
 	<button type="submit">Complete Round</button>
-</form>
-<div *ngIf="message">{{ message }}</div>
+	</form>
+</div>

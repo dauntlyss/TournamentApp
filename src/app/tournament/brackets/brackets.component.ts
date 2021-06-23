@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RosterService } from '../../services/roster.service';
+import { Match } from '../../model/match';
 
 @Component({
   selector: 'app-brackets',
@@ -7,23 +8,39 @@ import { RosterService } from '../../services/roster.service';
   styleUrls: ['./brackets.component.css']
 })
 export class BracketsComponent implements OnInit {
-  public players: String[];
-  public message;
-  public winners: String[];
-  public matchOne: String[];
+  public matches: Array<Match>;
+  public match: Match;
 
   constructor(private rosterService: RosterService) { }
 
   ngOnInit(): void {
-    this.players = this.rosterService.getContestants();
-	  this.message = null;
-    this.winners = ['','','',''];
-    this.matchOne = [this.players[0], this.players[1]];
+    this.setMatches();
   }
 
   setMatchOneWinner (winner: String) {
   	this.winners[0] = winner;
   }
+
+  setMatches() {
+  	let length = this.rosterService.getContestants().length;
+    if (length == 2) {
+      this.matches = [
+        new Match(this.rosterService.getContestants()[0],
+        this.rosterService.getContestants()[1])
+  		];
+  	} else if (length == 4) {
+      this.matches = [
+        new Match(this.rosterService.getContestants()[0], this.rosterService.getContestants()[1]),
+  			new Match(this.rosterService.getContestants()[2], this.rosterService.getContestants()[3])
+      ];
+  	} else if (length == 8) {
+  		this.matches = [
+  			new Match(this.rosterService.getContestants()[0], this.rosterService.getContestants()[1]),
+  			new Match(this.rosterService.getContestants()[2], this.rosterService.getContestants()[3]),
+  			new Match(this.rosterService.getContestants()[4], this.rosterService.getContestants()[5]),
+  			new Match(this.rosterService.getContestants()[6], this.rosterService.getContestants()[7])
+      ];
+  	}
 
   completeRound() {
     this.message = this.matchOne;
