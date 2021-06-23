@@ -9,6 +9,7 @@ import { Match } from '../../model/match';
 })
 export class BracketsComponent implements OnInit {
   public matches: Array<Match>;
+  public match: Match;
   public message: String;
 
   constructor(private rosterService: RosterService) { }

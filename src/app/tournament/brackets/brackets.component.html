@@ -9,18 +9,21 @@
 
 			<input type="radio"
 			       name="match{{ contestantSpot }}"
-			       value="matches[contestantSpot].firstContestant">
+			       value="matches[contestantSpot].firstContestan"
+             (click)="match.setWinner(matches[contestantSpot].firstContestant)">
 
 			<label>{{ matches[contestantSpot].firstContestant  }}</label>
 
       <input type="radio"
 			       name="match{{ contestantSpot }}"
-			       value="matches[contestantSpot].secondContestant">
+			       value="matches[contestantSpot].secondContestant"
+             (click)="match.setWinner(matches[contestantSpot].secondContestant)">
 
 			<label>{{ matches[contestantSpot].secondContestant }}</label>
-      
+
 			<br>
 		</div>
 	<button type="submit">Complete Round</button>
 	</form>
 </div>
+<div *ngIf="message">{{ message }}</div>
