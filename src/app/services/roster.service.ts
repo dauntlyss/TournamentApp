@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RosterService {
   private theContestants: String[];
 
@@ -11,8 +12,8 @@ export class RosterService {
   }
 
   /* returns the list of registered contestants' names (as a list of strings) */
-    getConstestants() : String[] {
-    return this.theContestants;
+    getContestants() : String[] {
+      return this.theContestants;
   }
 
   /* adds a single contestant to the registry */
@@ -21,9 +22,13 @@ export class RosterService {
 		 throw "player is null";
 	} else if (player.trim() == '') {
 		 throw "player is empty";
-	} else if (this.theContestants.includes(player.valueOf())) {
-		 throw "player is duplicate";
 	}
+
+  for (var contestant in this.theContestants) {
+    if (this.theContestants[contestant].toLowerCase() == player.toLowerCase()) {
+      throw "player is a duplicate"
+    }
+  }
 	 this.theContestants.push(player);
   }
 
