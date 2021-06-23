@@ -13,4 +13,11 @@ describe('RosterService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should not allow duplicate names', () => {
+    expect(function () {
+	service.addContestant('Alyssa');
+    	service.addContestant('Alyssa');
+    }).toThrow('player is duplicate');
+  });
 });
