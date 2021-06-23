@@ -19,7 +19,7 @@ export class RosterService {
   addContestant(player: String) {
   if (player == null) {
 		 throw "player is null";
-	} else if (player == '') {
+	} else if (player.trim() == '') {
 		 throw "player is empty";
 	} else if (this.theContestants.includes(player.valueOf())) {
 		 throw "player is duplicate";
