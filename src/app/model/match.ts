@@ -23,4 +23,3 @@ constructor(public firstContestant: String, public secondContestant: String) {
   }
 
   }
-}
