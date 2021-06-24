@@ -9,7 +9,7 @@ import { Match } from '../../model/match';
 })
 export class BracketsComponent implements OnInit {
   public matches: Array<Match>;
-  public match: Match;
+  public round: String;
   public message: String;
 
   constructor(private rosterService: RosterService) { }
@@ -20,29 +20,41 @@ export class BracketsComponent implements OnInit {
   }
 
   setMatches() {
-  	let length = this.rosterService.getContestants().length;
+    let length = this.rosterService.getContestants().length;
     if (length == 2) {
+      this.round = "Round 3";
       this.matches = [
         new Match(this.rosterService.getContestants()[0],
         this.rosterService.getContestants()[1])
-  		];
-  	} else if (length == 4) {
+      ];
+    } else if (length == 4) {
+      this.round = "Round 2";
       this.matches = [
         new Match(this.rosterService.getContestants()[0], this.rosterService.getContestants()[1]),
-  			new Match(this.rosterService.getContestants()[2], this.rosterService.getContestants()[3])
+        new Match(this.rosterService.getContestants()[2], this.rosterService.getContestants()[3])
       ];
-  	} else if (length == 8) {
-  		this.matches = [
-  			new Match(this.rosterService.getContestants()[0], this.rosterService.getContestants()[1]),
-  			new Match(this.rosterService.getContestants()[2], this.rosterService.getContestants()[3]),
-  			new Match(this.rosterService.getContestants()[4], this.rosterService.getContestants()[5]),
-  			new Match(this.rosterService.getContestants()[6], this.rosterService.getContestants()[7])
+    } else if (length == 8) {
+      this.round = "Round 1";
+      this.matches = [
+        new Match(this.rosterService.getContestants()[0], this.rosterService.getContestants()[1]),
+        new Match(this.rosterService.getContestants()[2], this.rosterService.getContestants()[3]),
+        new Match(this.rosterService.getContestants()[4], this.rosterService.getContestants()[5]),
+        new Match(this.rosterService.getContestants()[6], this.rosterService.getContestants()[7])
       ];
-  	}
+    }
+  }
+
+  /* returns a list of all the matches in the current round */
+  getMatches(): Array<Match> {
+    return this.matches;
   }
 
   completeRound() {
-  	this.message = this.matches[0].getWinner();
+    this.rosterService.getContestants().length = 0;
+    for(var match in this.matches){
+      this.rosterService.addContestant(this.matches[match].getWinner());
+    }
+    this.setMatches();
   }
 
 }
