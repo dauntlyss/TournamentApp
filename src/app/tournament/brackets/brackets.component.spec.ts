@@ -35,7 +35,7 @@ describe('BracketsComponent', () => {
     });
 
     it('should load round field as undefined', () => {
-    			expect(component.round).toEqual(undefined);
+    			expect(component.round).toEqual(1);
   	});
   });
 
@@ -261,17 +261,17 @@ describe('BracketsComponent', () => {
       service.addContestant('Toby Flenderson');
       component.setMatches();
 
-      expect(component.round).toEqual('Round 1');
+      expect(component.round).toEqual(1);
       component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
       component.getMatches()[1].setWinner(component.getMatches()[1].firstContestant);
       component.getMatches()[2].setWinner(component.getMatches()[2].secondContestant);
       component.getMatches()[3].setWinner(component.getMatches()[3].secondContestant);
       component.completeRound();
-      expect(component.round).toEqual('Round 2');
+      expect(component.round).toEqual(2);
       component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
       component.getMatches()[1].setWinner(component.getMatches()[1].secondContestant);
       component.completeRound();
-      expect(component.round).toEqual('Round 3');
+      expect(component.round).toEqual(3);
     });
   });
 
