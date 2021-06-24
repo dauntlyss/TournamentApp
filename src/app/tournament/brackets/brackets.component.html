@@ -2,6 +2,7 @@
 	<h1>{{ round }}</h1>
 </div>
 
+<div *ngIf="!message">
 <div class="form-group">
   <form (ngSubmit)="completeRound()">
     <div *ngFor="let match of matches; index as contestantSpot">
@@ -9,7 +10,7 @@
 
       <input type="radio"
       name="match{{ contestantSpot }}"
-      value="matches[contestantSpot].firstContestan"
+      value="matches[contestantSpot].firstContestant"
       (click)="match.setWinner(matches[contestantSpot].firstContestant)">
 
       <label>{{ matches[contestantSpot].firstContestant  }}</label>
@@ -26,4 +27,4 @@
     <button type="submit">Complete Round</button>
   </form>
 </div>
-<div *ngIf="message">{{ message }}</div>
+<div *ngIf="message"><<strong>{{ message }}</strong></div>

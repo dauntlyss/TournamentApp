@@ -5,7 +5,7 @@ public winner: String;
 constructor(public firstContestant: String, public secondContestant: String) {
          this.winner = '';
       }
-/* sets the winner of the particular match */
+/* sets the winner of the match */
   setWinner(winner: String) {
     if (winner == null) {
       throw "winner cannot be null";

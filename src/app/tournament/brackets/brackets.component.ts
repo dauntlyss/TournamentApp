@@ -15,10 +15,13 @@ export class BracketsComponent implements OnInit {
   constructor(private rosterService: RosterService) { }
 
   ngOnInit(): void {
+    this.matches = [];
+    this.round = 1;
     this.setMatches();
     this.message = null;
   }
 
+  /* sets the number of matches in a round based on the number of contestants*/
   setMatches() {
     let length = this.rosterService.getContestants().length;
     if (length == 2) {
@@ -41,6 +44,9 @@ export class BracketsComponent implements OnInit {
         new Match(this.rosterService.getContestants()[4], this.rosterService.getContestants()[5]),
         new Match(this.rosterService.getContestants()[6], this.rosterService.getContestants()[7])
       ];
+    } else {
+      this.message = "Winner: " + this.rosterService.getContestants()[0];
+      this.rosterService.getContestants().length = 0;
     }
   }
 
@@ -50,11 +56,26 @@ export class BracketsComponent implements OnInit {
   }
 
   completeRound() {
-    this.rosterService.getContestants().length = 0;
-    for(var match in this.matches){
-      this.rosterService.addContestant(this.matches[match].getWinner());
+    try {
+      this.rosterService.getContestants().length = 0;
+      for(var match in this.matches){
+        this.rosterService.addContestant(this.matches[match].getWinner());
+      }
+      this.setMatches();
+      this.nextRound();
     }
-    this.setMatches();
+    catch(err) {
+      this.message = err;
+    }
+  }
+
+  /* Changes number of what round the user should be on
+  */
+  nextRound() {
+    if (this.message) {
+      return this.round;
+    }
+    this.round++;
   }
 
 }

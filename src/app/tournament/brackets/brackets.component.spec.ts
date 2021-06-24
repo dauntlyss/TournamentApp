@@ -210,7 +210,7 @@ describe('BracketsComponent', () => {
       expect(round2Winners).toEqual(['Jim Halpert','Toby Flenderson']);
     });
 
-    it('should change values of matches after each completeRound call (round 1, 2, and 3)', () => {
+    it('should change values of matches after each completeRound() call (round 1, 2, and 3)', () => {
       service.addContestant('Jim Halpert');
       service.addContestant('Pam Halpert');
       service.addContestant('Stanley Hudson');
@@ -248,4 +248,111 @@ describe('BracketsComponent', () => {
     ]);
     });
   });
+
+  describe('Round update', () => {
+    it('should change values of round variable after each completeRound call (round 1, 2, and 3)', () => {
+      service.addContestant('Jim Halpert');
+      service.addContestant('Pam Halpert');
+      service.addContestant('Stanley Hudson');
+      service.addContestant('Michael Scott');
+      service.addContestant('Kevin Malone');
+      service.addContestant('Creed Bratton');
+      service.addContestant('Andy Bernard');
+      service.addContestant('Toby Flenderson');
+      component.setMatches();
+
+      expect(component.round).toEqual('Round 1');
+      component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
+      component.getMatches()[1].setWinner(component.getMatches()[1].firstContestant);
+      component.getMatches()[2].setWinner(component.getMatches()[2].secondContestant);
+      component.getMatches()[3].setWinner(component.getMatches()[3].secondContestant);
+      component.completeRound();
+      expect(component.round).toEqual('Round 2');
+      component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
+      component.getMatches()[1].setWinner(component.getMatches()[1].secondContestant);
+      component.completeRound();
+      expect(component.round).toEqual('Round 3');
+    });
+  });
+
+  describe('Next Round', () => {
+		it('should increase round except for when message exists', () => {
+			expect(component.round).toEqual(1);
+			expect(component.message).toEqual(null);
+
+			component.nextRound();
+			expect(component.round).toEqual(2);
+			expect(component.message).toEqual(null);
+
+			component.nextRound();
+			expect(component.round).toEqual(3);
+			expect(component.message).toEqual(null);
+
+			component.nextRound();
+			expect(component.round).toEqual(4);
+			expect(component.message).toEqual(null);
+
+			component.message = 'message'
+			component.nextRound();
+			expect(component.round).toEqual(4);
+			expect(component.message).toEqual('message');
+		});
+	});
+
+  describe('Messages (Error and Winner)', () => {
+		it('should change values of message to say thrown error for when an empty string is entered when adding contestant', () => {
+      service.addContestant('Jim Halpert');
+      service.addContestant('Pam Halpert');
+      service.addContestant('Stanley Hudson');
+      service.addContestant('Michael Scott');
+      service.addContestant('Kevin Malone');
+      service.addContestant('Creed Bratton');
+      service.addContestant('Andy Bernard');
+      service.addContestant('Toby Flenderson');
+			component.setMatches();
+
+    			expect(component.message).toEqual(null);
+
+			component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
+			component.getMatches()[1].setWinner(component.getMatches()[1].firstContestant);
+			component.getMatches()[2].setWinner(component.getMatches()[2].secondContestant);
+
+			component.completeRound();
+			expect(component.message).toEqual('player is empty');
+		});
+
+		it('should display the winner after the third completeRound call. Should be null before that', () => {
+      service.addContestant('Jim Halpert');
+      service.addContestant('Pam Halpert');
+      service.addContestant('Stanley Hudson');
+      service.addContestant('Michael Scott');
+      service.addContestant('Kevin Malone');
+      service.addContestant('Creed Bratton');
+      service.addContestant('Andy Bernard');
+      service.addContestant('Toby Flenderson');
+			component.setMatches();
+
+    			expect(component.message).toEqual(null);
+
+			component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
+			component.getMatches()[1].setWinner(component.getMatches()[1].firstContestant);
+			component.getMatches()[2].setWinner(component.getMatches()[2].secondContestant);
+			component.getMatches()[3].setWinner(component.getMatches()[3].secondContestant);
+
+			component.completeRound();
+			expect(component.message).toEqual(null);
+
+			component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
+			component.getMatches()[1].setWinner(component.getMatches()[1].secondContestant);
+
+			component.completeRound();
+			expect(component.message).toEqual(null);
+
+			component.getMatches()[0].setWinner(component.getMatches()[0].firstContestant);
+
+			component.completeRound();
+			expect(component.message).toEqual('Winner: Jim Halpert');
+		});
+	});
+
 });
