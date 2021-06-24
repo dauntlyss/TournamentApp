@@ -68,6 +68,7 @@ describe('RegistrationComponent', () => {
 			component.registerContestants();
     	expect(component.message).toEqual('Roster must be 2, 4, or 8 players');
   		});
+
 		it('should update message with information on roster size with empty space between', () => {
 			component.players[0] = 'RYan';
 			component.players[2] = 'KarEn';
@@ -122,5 +123,22 @@ describe('RegistrationComponent', () => {
   		});
 
 	});
+
+  describe('Autofills', () => {
+    it('should return two preset names in the player', () => {
+      component.autofillTwo();
+          expect(component.players).toEqual(['Michael', 'Jim', '','', '', '', '', '']);
+      });
+
+    it('should return four preset names in the player', () => {
+      component.autofillFour();
+          expect(component.players).toEqual(['Pam', 'Jim', 'Stanley','Creed', '', '', '', '']);
+      });
+
+    it('should return eight preset names in the player', () => {
+      component.autofillEight();
+          expect(component.players).toEqual(['Micheal', 'Meredith', 'Creed','Ryan', 'Dwight', 'Jan', 'Andy', 'Kevin']);
+      });
+  });
 
 });

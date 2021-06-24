@@ -6,11 +6,15 @@
 	<form (ngSubmit)="registerContestants()">
     <div *ngFor="let player of players; index as playerSpot; trackBy: trackByPlayerIndex">
 			<input type="text"
-			       placeholder="Contestant Name"
+			       placeholder="Contestant {{ playerSpot }}"
 			       name="playerNameSpot{{ playerSpot }}"
 			       [(ngModel)]="players[playerSpot]">
       <br>
     </div>
     <button type="submit">Register Contestants</button>
 	</form>
+
+	<button (click)="autofillTwo()">Autofill 2 Players</button>
+	<button (click)="autofillFour()">Autofill 4 Players</button>
+	<button (click)="autofillEight()">Autofill 8 Players</button>
 </div>
